@@ -765,9 +765,9 @@
         </div>
         <div class="cta-row" id="submit-row">
           <button class="cta" id="submit-btn" type="button">Send my answers <span class="cta-arrow">&rarr;</span></button>
-          <button class="back-link" id="download-btn" type="button" style="margin-top:0;">Save a copy</button>
+          <button class="back-link" id="download-btn" type="button" style="margin-top:0;">Download my answers</button>
         </div>
-        <p class="review-note" id="review-note"></p>
+        <p class="review-note" id="review-note">Tip: "Download my answers" saves a file with every question and your answers, so you always have your own copy.</p>
       </div>
     </section>
   </main>
@@ -776,6 +776,9 @@
     <div class="overlay-card">
       <h2 class="overlay-title">Received.<br /><em>Thank you, Marc.</em></h2>
       <p class="overlay-body">Your answers are on their way to us, and a backup copy has been saved to your Downloads folder just in case. This means a lot, and we'll keep you in the loop.</p>
+      <div class="cta-row" style="justify-content:center;">
+        <button class="cta" id="overlay-download-btn" type="button">Download my answers <span class="cta-arrow">&darr;</span></button>
+      </div>
       <p class="overlay-meta">You can close this window</p>
     </div>
   </div>
@@ -1062,6 +1065,7 @@
     document.getElementById('begin-btn').addEventListener('click', () => showScreen('section-1'));
     document.getElementById('submit-btn').addEventListener('click', submitToGoogle);
     document.getElementById('download-btn').addEventListener('click', downloadMarkdown);
+    (function(){ var odb = document.getElementById('overlay-download-btn'); if (odb) odb.addEventListener('click', downloadMarkdown); })();
 
     document.querySelectorAll('[data-action="next"]').forEach(btn => {
       btn.addEventListener('click', () => {
