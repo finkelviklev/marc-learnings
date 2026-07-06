@@ -775,7 +775,7 @@
   <div class="overlay" id="thanks-overlay" aria-hidden="true">
     <div class="overlay-card">
       <h2 class="overlay-title">Received.<br /><em>Thank you, Marc.</em></h2>
-      <p class="overlay-body">This means a lot. We'll put it to good use as we help Michal build - and we'll keep you in the loop.</p>
+      <p class="overlay-body">Your answers are on their way to us, and a backup copy has been saved to your Downloads folder just in case. This means a lot, and we'll keep you in the loop.</p>
       <p class="overlay-meta">You can close this window</p>
     </div>
   </div>
@@ -1024,7 +1024,8 @@
     function showThanks() {
       document.body.classList.add('overlay-open');
       document.getElementById('thanks-overlay').classList.add('visible');
-      try { localStorage.removeItem(STORAGE_KEY); } catch (e) {}
+      // Do NOT clear the saved draft. If the send ever fails, the answers stay
+      // in the browser and can be recovered by reopening the same link.
     }
 
     function isGoogleConnected() { return FORM_ACTION_URL && Object.keys(FORM_ENTRY_MAP).length > 0; }
@@ -1042,6 +1043,8 @@
       }
       btn.disabled = true;
       btn.firstChild.textContent = 'Sending... ';
+      // Belt-and-suspenders: always save a local backup copy before sending.
+      try { downloadMarkdown(); } catch (e) {}
       const fd = new FormData();
       Object.keys(FORM_ENTRY_MAP).forEach(name => {
         const entry = FORM_ENTRY_MAP[name];
